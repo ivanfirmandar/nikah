@@ -9,7 +9,9 @@ const app = express();
 const api = express();
 
 const server = http.createServer(app);
-
+var corsOptions = {
+  origin : '*'
+}
 const router = app.use("/api",api);
 api.use(function(req,res,next){
   res.header('Access-Control-Allow-Origin', '*');
@@ -19,8 +21,8 @@ api.use(function(req,res,next){
 })
 api.use(bodyParser.json())
 
-api.get("/getMessages",cors(), handler.getMessages);
-api.post("/sendMessages",handler.sendMessages);
+api.get("/getMessages",cors(corsOptions), handler.getMessages);
+api.post("/sendMessages",cors(corsOptions),handler.sendMessages);
 app.listen(config.port, services.checkConnection);
 
 

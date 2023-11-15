@@ -12,6 +12,31 @@ module.exports = {
             datas : datas
          })
     },
+    sendMessages : async (req,res)=>{
+        console.log(req.body)
+        connection = await connectionHandler();
+        database = connection.db("ivanadin");
+        collection = database.collection("pesan");
+        datas = await collection.insertOne({
+            tanggal : new Date(),
+            nama : req.body.nama,
+            pesan : req.body.pesan
+        })
+        res.json({
+            status : "success",
+            messages : datas
+        })
+    },
+    getMessages : async (req,res)=>{
+        connection = await connectionHandler();
+        database = connection.db("ivanadin");
+        collection = database.collection("pesan");
+        datas = await collection.find({}).toArray();
+        res.json({
+            status : "success",
+            datas : datas
+         })
+    },
     sentWAstatus: async (req,res)=>{
         connection = await connectionHandler();
         database = connection.db("whatsapush");
